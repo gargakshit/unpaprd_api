@@ -1,0 +1,20 @@
+{
+  "name": "unpaprd_api",
+  "version": "1.0.0",
+  "description": "API for the Unpaprd",
+  "main": "index.js",
+  "author": "Akshit Garg <akshit@paperplane.ml>",
+  "license": "AGPL-3.0-or-later",
+  "private": false,
+  "dependencies": {
+    "@elastic/elasticsearch": "^7.5.0",
+    "express": "^4.17.1",
+    "html-to-text": "^5.1.1",
+    "isomorphic-unfetch": "^3.0.0",
+    "lodash": "^4.17.15",
+    "qwant-api": "^0.5.0",
+    "rss-parser": "^3.7.3",
+    "xml2js": "^0.4.23",
+    "yandex-pictures": "^1.4.88"
+  }
+}

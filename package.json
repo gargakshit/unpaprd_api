@@ -8,6 +8,7 @@
   "private": false,
   "dependencies": {
     "@elastic/elasticsearch": "^7.5.0",
+    "cheerio": "^1.0.0-rc.3",
     "express": "^4.17.1",
     "html-to-text": "^5.1.1",
     "isomorphic-unfetch": "^3.0.0",

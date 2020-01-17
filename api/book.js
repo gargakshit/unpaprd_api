@@ -74,7 +74,7 @@ module.exports = async (req, res) => {
           "download"
         )}/${url_iarchive
           .replace("www.", "")
-          .replace("http://archive.org/details/", "")}_files_all.torrent`
+          .replace("http://archive.org/details/", "")}_archive.torrent`
       });
     }
   );

@@ -95,8 +95,6 @@ module.exports = (req, response) => {
         })
       );
 
-      data.sort((a, b) => (a.title > b.title ? 1 : b.title > a.title ? -1 : 0));
-
       response.setHeader(
         "Cache-Control",
         "s-maxage=43200 stale-while-revalidate"

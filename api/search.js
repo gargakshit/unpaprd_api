@@ -97,7 +97,7 @@ module.exports = (req, response) => {
 
       response.setHeader(
         "Cache-Control",
-        "s-maxage=43200 stale-while-revalidate"
+        "s-maxage=604800 stale-while-revalidate"
       );
 
       response.json(data);

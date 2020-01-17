@@ -95,6 +95,11 @@ module.exports = (req, response) => {
         })
       );
 
+      response.setHeader(
+        "Cache-Control",
+        "s-maxage=300 stale-while-revalidate"
+      );
+
       response.json(data);
     });
 };

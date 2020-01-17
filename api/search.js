@@ -5,7 +5,7 @@ module.exports = (req, response) => {
   const { q } = req.query;
 
   fetch(
-    `https://librivox.org/advanced_search?title=&author=&reader=&keywords=&genre_id=0&status=all&project_type=either&recorded_language=&sort_order=alpha&search_page=1&search_form=advanced&q=${q}`,
+    `https://librivox.org/advanced_search?title=&author=&reader=&keywords=&genre_id=0&status=all&project_type=either&recorded_language=&sort_order=alpha&search_page=1&search_form=advanced&q=${q.toLowerCase()}`,
     {
       headers: {
         "X-Requested-With": "XMLHttpRequest"

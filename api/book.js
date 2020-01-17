@@ -68,7 +68,13 @@ module.exports = async (req, res) => {
         num_sections: book.num_sections,
         genre: book.genre,
         readers: _.uniqBy(readers, "reader_id"),
-        audio
+        audio,
+        torrent: `${url_iarchive.replace(
+          "details",
+          "download"
+        )}/${url_iarchive
+          .replace("www.", "")
+          .replace("http://archive.org/details/", "")}_files_all.torrent`
       });
     }
   );

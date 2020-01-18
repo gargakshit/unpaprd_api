@@ -3,8 +3,10 @@ require("isomorphic-unfetch");
 const cheerio = require("cheerio");
 
 module.exports = async (req, resp) => {
+  const mirror = await libgen.mirror();
+
   const apiData = await libgen.search({
-    mirror: "https://libgen.is",
+    mirror: mirror,
     query: req.query.q,
     count: 5
   });
@@ -14,7 +16,7 @@ module.exports = async (req, resp) => {
   } else {
     const data = apiData.filter(d => d.extension === "pdf");
 
-    fetch(`https://libgen.is/book/index.php?md5=${data[0].md5.toLowerCase()}`)
+    fetch(`${mirror}/book/index.php?md5=${data[0].md5.toLowerCase()}`)
       .then(res => res.text())
       .then(res => {
         const $ = cheerio.load(res);

@@ -38,8 +38,6 @@ module.exports = async (req, res) => {
       const audio = [];
 
       if (!err) {
-        console.log(err);
-
         data.files.file.forEach(file => {
           if (file.original && file.$.name) {
             if (
@@ -69,6 +67,10 @@ module.exports = async (req, res) => {
         genre: book.genre,
         readers: _.uniqBy(readers, "reader_id"),
         audio,
+        ebook: `${book.url_text_source.replace(
+          "etext",
+          "ebooks"
+        )}.epub.noimages`,
         torrent: `${url_iarchive.replace(
           "details",
           "download"

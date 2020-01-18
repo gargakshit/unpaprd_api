@@ -12,12 +12,16 @@ module.exports = async (req, resp) => {
   });
 
   if (!apiData || apiData.length === 0) {
-    resp.status(404).send("Not found");
+    resp
+      .status(404)
+      .send("The book you requested is not available as an e-book");
   } else {
     const data = apiData.filter(d => d.extension === "pdf");
 
     if (data.length === 0) {
-      resp.status(404).send("Not Found!");
+      resp
+        .status(404)
+        .send("The book you requested is not available as an e-book");
     } else {
       fetch(`${mirror}/book/index.php?md5=${data[0].md5.toLowerCase()}`)
         .then(res => res.text())

@@ -56,6 +56,8 @@ module.exports = async (req, res) => {
         });
       }
 
+      res.setHeader("Cache-Control", "s-maxage=604800 stale-while-revalidate");
+
       res.json({
         id: book.id,
         title: book.title,

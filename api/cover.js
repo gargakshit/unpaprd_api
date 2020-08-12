@@ -11,7 +11,7 @@ module.exports = (req, res) => {
         if (data.length) {
           res.setHeader(
             "Location",
-            `https:${data[0].image}`
+            `${data[0].image}`
           );
           res.status(301).send();
         } else {

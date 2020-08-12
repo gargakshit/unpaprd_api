@@ -9,13 +9,13 @@
   "dependencies": {
     "@elastic/elasticsearch": "^7.5.0",
     "cheerio": "^1.0.0-rc.3",
+    "duckduckgo-images-api": "^1.0.5",
     "express": "^4.17.1",
     "html-to-text": "^5.1.1",
     "isomorphic-unfetch": "^3.0.0",
     "libgen": "^2.0.0",
     "lodash": "^4.17.15",
     "natural": "^0.6.3",
-    "qwant-api": "^0.5.0",
     "rss-parser": "^3.7.3",
     "xml2js": "^0.4.23",
     "yandex-pictures": "^1.4.88"

@@ -1,4 +1,4 @@
-const qwant = require("qwant-api");
+const { image_search } = require('duckduckgo-images-api');
 
 module.exports = (req, res) => {
   const { name } = req.query;
@@ -6,20 +6,17 @@ module.exports = (req, res) => {
   if (!name) {
     res.status(500).send("Error.");
   } else {
-    qwant.search(
-      "images",
-      { query: name, count: 0, offset: 0, language: "english" },
-      (err, { data }) => {
-        if (err) {
-          res.status(500).send("Internal Server Error.");
-        } else {
+    image_search({ query: name })
+      .then((data) => {
+        if (data.length) {
           res.setHeader(
             "Location",
-            `https:${data.result.items[0].media_fullsize}`
+            `https:${data[0].image}`
           );
           res.status(301).send();
+        } else {
+          res.status(404).send("Not Found")
         }
-      }
-    );
+      });
   }
 };

@@ -9,10 +9,17 @@ module.exports = (req, res) => {
     image_search({ query: name })
       .then((data) => {
         if (data.length) {
-          res.setHeader(
-            "Location",
-            `${data[0].image}`
-          );
+          if (data[0].image.startsWith("http")) {
+            res.setHeader(
+              "Location",
+              `${data[0].image}`
+            );
+          } else {
+            res.setHeader(
+              "Location",
+              `http://${data[0].image}`
+            );
+          }
           res.status(301).send();
         } else {
           res.status(404).send("Not Found")

@@ -3,12 +3,11 @@ require("isomorphic-unfetch");
 const cheerio = require("cheerio");
 
 module.exports = async (req, resp) => {
-  const mirror = await libgen.mirror();
-
+  const mirror = "http://libgen.rs";
   const apiData = await libgen.search({
     mirror: mirror,
     query: req.query.q,
-    count: 5
+    count: 5,
   });
 
   if (!apiData || apiData.length === 0) {
@@ -16,44 +15,41 @@ module.exports = async (req, resp) => {
       .status(404)
       .send("The book you requested is not available as an e-book");
   } else {
-    const data = apiData.filter(d => d.extension === "pdf");
+    const data = apiData.filter((d) => d.extension === "pdf");
 
     if (data.length === 0) {
-      resp
-        .status(404)
-        .send("The book you requested is not available as an e-book");
+      resp.status(404).send("The requested book is not available");
     } else {
-      fetch(`${mirror}/book/index.php?md5=${data[0].md5.toLowerCase()}`)
-        .then(res => res.text())
-        .then(res => {
-          const $ = cheerio.load(res);
+      try {
+        fetch(`${mirror}/book/index.php?md5=${data[0].md5.toLowerCase()}`)
+          .then((res) => res.text())
+          .then((res) => {
+            const $ = cheerio.load(res);
 
-          $("a").each((_, element) => {
-            if (element.attribs.title === "Gen.lib.rus.ec") {
-              fetch(element.attribs.href)
-                .then(res => res.text())
-                .then(res => {
-                  const $ = cheerio.load(res);
+            const newUrl = $(
+              "body > table > tbody > tr:nth-child(18) > td:nth-child(2) > table > tbody > tr > td:nth-child(1) > a"
+            ).attr().href;
 
-                  $("a").each((_, el) => {
-                    if (el.attribs.href.startsWith("/")) {
-                      resp.setHeader(
-                        "Cache-Control",
-                        "s-maxage=604800 stale-while-revalidate"
-                      );
+            fetch(newUrl)
+              .then((res) => res.text())
+              .then((res) => {
+                const $ = cheerio.load(res);
 
-                      resp.send(
-                        `${element.attribs.href.replace(
-                          new RegExp("/_ads.*", "i"),
-                          ""
-                        )}${el.attribs.href}`
-                      );
-                    }
-                  });
-                });
-            }
+                const bookUrl = $("#download > ul > li:nth-child(1) > a").attr()
+                  .href;
+
+                resp.setHeader(
+                  "Cache-Control",
+                  "s-maxage=604800 stale-while-revalidate"
+                );
+
+                resp.send(bookUrl);
+              });
           });
-        });
+      } catch (e) {
+        console.log(e);
+        resp.status(500).send("Internal Server Error");
+      }
     }
   }
 };

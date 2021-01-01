@@ -6,7 +6,7 @@ module.exports = async (req, resp) => {
   const mirror = "http://libgen.rs";
   const apiData = await libgen.search({
     mirror,
-    query: "Moby Dick, or the Whale",
+    query: req.query.q,
     count: 5,
     search_in: "title",
   });
